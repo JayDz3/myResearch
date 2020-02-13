@@ -1,0 +1,8 @@
+.form-container {
+ display: flex;
+ flex-direction: column;
+}
+
+.mat-raised-button {
+ max-width: fit-content;
+}
