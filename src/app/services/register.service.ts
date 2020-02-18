@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, empty } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MyUser } from '../interfaces';
 
@@ -17,9 +17,10 @@ export class RegisterService {
   email: '',
   password: ''
  };
+ 
   constructor(private http: HttpClient) { }
   
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse): Observable<boolean> {
    console.error('get error: ' + error);
    if (error.error instanceof ErrorEvent) {
     console.error('an error occured:', error.error.message);
@@ -29,36 +30,25 @@ export class RegisterService {
      `body was: ${error.error}`);
      }
      console.log(error);
-     return of(this.users);
+     return of(false);
   }
+
  
-  private handlePostError(error: HttpErrorResponse) {
-   console.error('post error: ' + error);
-   if (error.error instanceof ErrorEvent) {
-    console.error('an error occured:', error.error.message);
-   } else {
-    console.error(
-     `Backend returned code ${error.status}, ` +
-     `body was: ${error.error}`);
-     }
-     console.log(error);
-     return of(this.user);
-  }
- 
- 
-  addUser( user: MyUser ): Observable<MyUser>  {
+  addUser(user: MyUser): Observable<boolean>  {
+   
    const httpOptions = {
     headers: new HttpHeaders({
      'Content-Type': 'application/json'
     })
    };
-   return this.http.post<MyUser>(this.url, user, httpOptions).pipe(
-    catchError(this.handlePostError)
+
+   return this.http.post<boolean>(this.url, user, httpOptions).pipe(
+    catchError(this.handleError)
    );
  
   }
  
-  getUsers(email: string): Observable<MyUser[]> {
+  getUsers(): Observable<MyUser[]> {
    return this.http.get<MyUser[]>(this.getUrl);
   }
 }

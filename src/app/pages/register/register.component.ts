@@ -19,36 +19,30 @@ export class RegisterComponent implements OnInit, OnDestroy {
   email: ['', Validators.required],
   password: ['', Validators.required]
 });
-private email: string;
-private users: MyUser[];
-private user$: Observable<MyUser>;
+
   constructor(private uf: FormBuilder, private service: RegisterService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  showDialog(message: string): void {
+   alert(message);
   }
 
-  showDialog(): void {
-   alert('this email is taken');
-  }
-
-  addNewUser() {
+  addNewUser(): void {
    let firstName: string = this.registerForm.get('firstName').value;
    let lastName: string = this.registerForm.get('lastName').value;
    let email: string = this.registerForm.get('email').value;
    let password: string = this.registerForm.get('password').value;
    this.user = { firstName, lastName, email, password };
-   this.service.getUsers(email).pipe(
-    takeUntil(this.onDestroy$),
-    switchMap(users => {
-     if (!users.find(i => i.email === email)) {
-      return this.service.addUser(this.user);
+   this.service.addUser(this.user).pipe(
+    takeUntil(this.onDestroy$)
+    ).subscribe(r => {
+     if (r === true) {
+      this.showDialog('Successfully Added');
      } else {
-      this.showDialog();
-      return of(this.user);
+      this.showDialog('This email has already been used');
      }
-    })
-   ).subscribe(r => console.log(r),
-     err => console.error(err));
+    });
   }
 
   ngOnDestroy() {
