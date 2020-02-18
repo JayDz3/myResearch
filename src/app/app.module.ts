@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { NotesComponent } from './pages/notes/notes.component';
@@ -14,6 +15,7 @@ import { IdeasComponent } from './pages/ideas/ideas.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HypothesisComponent } from './pages/hypothesis/hypothesis.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { RegisterComponent } from './pages/register/register.component';
     NotesComponent,
     IdeasComponent,
     HypothesisComponent,
-    RegisterComponent
+    RegisterComponent,
+    RegisterDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import { RegisterComponent } from './pages/register/register.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule
