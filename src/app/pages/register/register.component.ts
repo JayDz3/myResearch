@@ -39,7 +39,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     };
 
     this.dialog.open(RegisterDialogComponent, dialogConfig);
-    
   }
 
   addNewUser(): void {
@@ -48,9 +47,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
    let email: string = this.registerForm.get('email').value;
    let password: string = this.registerForm.get('password').value;
    this.user = { firstName, lastName, email, password };
+
    this.service.addUser(this.user).pipe(
-    takeUntil(this.onDestroy$)
-    ).subscribe(r => {
+    takeUntil(this.onDestroy$)).subscribe(r => {
      if (r === true) {
       this.showDialog('Successfully Added');
      } else {
@@ -61,6 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
    this.onDestroy$.next();
+   this.onDestroy$.complete();
   }
 
 }
