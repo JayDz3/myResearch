@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
      if (r === true) {
       this.showDialog('Successfully Added');
      } else {
-      this.showDialog('This email has already been used');
+      this.showDialog('This email is in use');
      }
     });
   }

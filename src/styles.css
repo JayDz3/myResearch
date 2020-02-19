@@ -1,1 +1,11 @@
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.flex-row {
+ display: flex;
+ flex-direction: row;
+}
+
+.flex-column {
+ display: flex;
+ flex-direction: column;
+}
