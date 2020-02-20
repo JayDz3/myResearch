@@ -8,3 +8,7 @@
  max-width: fit-content;
  position: relative;
 }
+
+.spinner {
+ margin: 0 auto;
+}

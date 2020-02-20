@@ -17,11 +17,13 @@ import { RegisterDialogComponent } from 'src/app/components/register-dialog/regi
 export class RegisterComponent implements OnInit, OnDestroy {
  private onDestroy$ = new Subject<void>();
  user: MyUser;
+ doDisable: boolean = false;
+ emailPattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
  registerForm = this.uf.group({
   firstName: ['', Validators.required],
   lastName: ['', Validators.required],
-  email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+  email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
   password: ['', Validators.required]
 });
 
@@ -43,15 +45,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   addNewUser(): void {
-   let firstName: string = this.registerForm.get('firstName').value;
-   let lastName: string = this.registerForm.get('lastName').value;
-   let email: string = this.registerForm.get('email').value;
-   let password: string = this.registerForm.get('password').value;
-   let isLoggedIn: boolean;
-   let stayLoggedIn: boolean;
-   isLoggedIn = false;
-   stayLoggedIn = false;
-   this.user = { firstName, lastName, email, password, isLoggedIn, stayLoggedIn };
+   if (!this.registerForm.valid) {
+    this.showDialog('Please ensure all fields are valid');
+    return;
+   }
+
+   this.doDisable = true;
+   this.setUserFields();
 
    this.service.addUser(this.user).pipe(
     takeUntil(this.onDestroy$)).subscribe(r => {
@@ -60,7 +60,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
      } else {
       this.showDialog('This email is in use');
      }
+     this.doDisable = false;
     });
+  }
+
+  setUserFields(): void {
+   let firstName: string = this.registerForm.get('firstName').value;
+   let lastName: string = this.registerForm.get('lastName').value;
+   let email: string = this.registerForm.get('email').value;
+   let password: string = this.registerForm.get('password').value;
+   let isLoggedIn: boolean;
+   let stayLoggedIn: boolean;
+   let emailConfirmed: boolean;
+   isLoggedIn = false;
+   stayLoggedIn = false;
+   emailConfirmed = false;
+   this.user = { firstName, lastName, email, password, emailConfirmed, isLoggedIn, stayLoggedIn };
   }
 
   ngOnDestroy() {

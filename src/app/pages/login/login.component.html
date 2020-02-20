@@ -7,7 +7,7 @@
    <input formControlName="email" matInput placeholder="youremail@email.com" type="email" >
   </mat-form-field>
    
-  <div *ngIf="(loginForm.get('email').invalid && loginForm.get('email').touched) || loginForm.dirty">
+  <div *ngIf="(loginForm.get('email').invalid && loginForm.get('email').touched || loginForm.get('email').dirty)">
    <small *ngIf="loginForm.get('email').errors?.required">Email is required</small>
    <small *ngIf="loginForm.get('email').errors?.pattern">Please provide a valid email</small>
   </div>
@@ -17,7 +17,7 @@
    <input formControlName="password" matInput placeholder="123abc" type="Password" >
   </mat-form-field>
 
-  <div *ngIf="(loginForm.get('password').invalid && loginForm.get('password').touched) || loginForm.dirty">
+  <div *ngIf="(loginForm.get('password').invalid && loginForm.get('password').touched || loginForm.get('password').dirty)">
    <small *ngIf="loginForm.get('password').errors?.required">Password is required</small>
   </div>
 
