@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HypothesisComponent } from './pages/hypothesis/hypothesis.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RegisterDialogComponent } from './components/register-dialog/register-d
     IdeasComponent,
     HypothesisComponent,
     RegisterComponent,
-    RegisterDialogComponent
+    RegisterDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of, empty } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MyUser } from '../interfaces';
 
@@ -9,14 +9,6 @@ import { MyUser } from '../interfaces';
 })
 export class RegisterService {
  private url = 'http://localhost:8080/user/add';
- private getUrl = 'http://localhost:8080/user/all';
- private users: MyUser[] = [];
- private user: MyUser = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: ''
- };
  
   constructor(private http: HttpClient) { }
   
@@ -35,7 +27,6 @@ export class RegisterService {
 
  
   addUser(user: MyUser): Observable<boolean>  {
-   
    const httpOptions = {
     headers: new HttpHeaders({
      'Content-Type': 'application/json'
@@ -46,9 +37,5 @@ export class RegisterService {
     catchError(this.handleError)
    );
  
-  }
- 
-  getUsers(): Observable<MyUser[]> {
-   return this.http.get<MyUser[]>(this.getUrl);
   }
 }

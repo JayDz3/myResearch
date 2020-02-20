@@ -17,10 +17,11 @@ import { RegisterDialogComponent } from 'src/app/components/register-dialog/regi
 export class RegisterComponent implements OnInit, OnDestroy {
  private onDestroy$ = new Subject<void>();
  user: MyUser;
+
  registerForm = this.uf.group({
   firstName: ['', Validators.required],
   lastName: ['', Validators.required],
-  email: ['', Validators.required],
+  email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
   password: ['', Validators.required]
 });
 
@@ -46,7 +47,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
    let lastName: string = this.registerForm.get('lastName').value;
    let email: string = this.registerForm.get('email').value;
    let password: string = this.registerForm.get('password').value;
-   this.user = { firstName, lastName, email, password };
+   let isLoggedIn: boolean;
+   let stayLoggedIn: boolean;
+   isLoggedIn = false;
+   stayLoggedIn = false;
+   this.user = { firstName, lastName, email, password, isLoggedIn, stayLoggedIn };
 
    this.service.addUser(this.user).pipe(
     takeUntil(this.onDestroy$)).subscribe(r => {

@@ -1,29 +1,42 @@
- <div class="container">
-
   <form [formGroup]="registerForm" class="form-container" (ngSubmit)="addNewUser()">
   
    <mat-form-field>
     <mat-label>First Name</mat-label>
     <input formControlName="firstName" matInput placeholder="Jason">
    </mat-form-field>
-  
+
+   <div *ngIf="(registerForm.get('firstName').invalid && registerForm.get('firstName').touched) || registerForm.dirty">
+    <small *ngIf="registerForm.get('firstName').errors?.required">First name is required</small>
+   </div>
+
    <mat-form-field>
     <mat-label>Last Name</mat-label>
     <input formControlName="lastName" matInput placeholder="Last Name" >
    </mat-form-field>
+
+   <div *ngIf="(registerForm.get('lastName').invalid && registerForm.get('lastName').touched) || registerForm.dirty">
+    <small *ngIf="registerForm.get('lastName').errors?.required">Last name is required</small>
+   </div>
   
    <mat-form-field>
     <mat-label>Email</mat-label>
     <input formControlName="email" matInput placeholder="youremail@email.com" type="email" >
    </mat-form-field>
+
+   <div *ngIf="(registerForm.get('email').invalid && registerForm.get('email').touched) || registerForm.dirty">
+    <small *ngIf="registerForm.get('email').errors?.required">Email is required</small>
+    <small *ngIf="registerForm.get('email').errors?.pattern">Please provide a valid email</small>
+   </div>
   
    <mat-form-field>
     <mat-label>Password</mat-label>
     <input formControlName="password" matInput placeholder="123abc" type="Password" >
    </mat-form-field>
-    
+   
+   <div *ngIf="(registerForm.get('password').invalid && registerForm.get('password').touched) || registerForm.dirty">
+    <small *ngIf="registerForm.get('password').errors?.required">Password is required</small>
+   </div>
+ 
    <button mat-raised-button type="submit">GO</button>
 
   </form>
-
-  </div>

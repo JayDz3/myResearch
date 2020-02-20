@@ -3,4 +3,6 @@ export interface MyUser {
  lastName: string;
  email: string;
  password: string;
+ isLoggedIn: boolean;
+ stayLoggedIn: boolean;
 }
